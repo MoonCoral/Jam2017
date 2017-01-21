@@ -11,10 +11,10 @@ public class Pickup : MonoBehaviour {
 		
 	}
 
-	void OnTriggerEnter(Collider other){
+	void OnTriggerEnter2D(Collider2D other){
 		if (other.tag == "Key") {
 			keyCollected = true;
-			Destroy (other.gameObject);
+			Destroy(other.gameObject);
 		}
 	}
 }
