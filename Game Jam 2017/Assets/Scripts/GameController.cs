@@ -25,7 +25,7 @@ public class GameController : Singleton<GameController> {
 	private IEnumerator playersTurn() {
 		InputManager.Instance.isInteractable = false;
 		yield return new WaitForSeconds (playerIntermissionDuration);
-		//StartCoroutine (enemiesTurn ());
+		StartCoroutine (enemiesTurn ());
 		InputManager.Instance.isInteractable = true;
 	}
 	private IEnumerator enemiesTurn() {
@@ -33,6 +33,7 @@ public class GameController : Singleton<GameController> {
 		foreach (IEnemy enemy in enemyList) {
 			enemy.action ();
 		}
+	    StartCoroutine(playersTurn());
 		InputManager.Instance.isInteractable = true;
 	}
 }

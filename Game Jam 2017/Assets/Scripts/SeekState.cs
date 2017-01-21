@@ -5,7 +5,7 @@ using System;
 public class SeekState : State
 {
     //Tile n, e, s, w;
-    private Vector3 lastSeen = GameObject.Find("Player").transform.position;
+    private Vector3 lastSeen = GameObject.Find("Player(Clone)").transform.position;
     public SeekState()
     {
         id = StateID.Seeking;
