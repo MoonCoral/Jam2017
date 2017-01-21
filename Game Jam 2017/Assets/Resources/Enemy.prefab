@@ -22,7 +22,7 @@ GameObject:
   - 212: {fileID: 212000012412815226}
   - 114: {fileID: 114000010780444594}
   m_Layer: 0
-  m_Name: enemy
+  m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
