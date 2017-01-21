@@ -65,7 +65,7 @@ public class LevelLoader : MonoBehaviour
                         {
                             go = Resources.Load("Wall_Full") as GameObject;
                         }
-                        if (!t && !b && !l && !r)
+                        else if (!t && !b && !l && !r)
                         {
                             go = Resources.Load("Wall_Pillar") as GameObject;
                         }
