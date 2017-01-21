@@ -95,53 +95,59 @@ public class LevelLoader : MonoBehaviour
                         go = Resources.Load("Floor") as GameObject;
                         break;
                     case 'D': //Door
+                        go = Resources.Load("Floor") as GameObject;
                         if (level.bytes[x + (y - 1)*Width + (y - 1)] == 0x23)
                         {
-                            go = Resources.Load("Door_V") as GameObject;
+                            en = Resources.Load("Door_V") as GameObject;
                         }
                         else
                         {
-                            go = Resources.Load("Door_H") as GameObject;
+                            en = Resources.Load("Door_H") as GameObject;
                         }
+                        break;
+                    case 'C': //Closable Door
+                        go = Resources.Load("Floor") as GameObject;
+                        en = Resources.Load("Closable") as GameObject;
                         break;
                     case 'P': //Player
                         go = Resources.Load("Floor") as GameObject;
                         en = Resources.Load("Player") as GameObject;
                         break;
                     case 'F': //Finish
-                        go = Resources.Load("Finish") as GameObject;
+                        go = Resources.Load("Floor") as GameObject;
+                        en = Resources.Load("Finish") as GameObject;
                         break;
                     case 'E': //Enemy
                         go = Resources.Load("Floor") as GameObject;
                         en = Resources.Load("Enemy") as GameObject;
                         break;
                     case 'A': //Lock A
+                        go = Resources.Load("Floor") as GameObject;
                         if (level.bytes[x + (y - 1) * Width + (y - 1)] == 0x23)
                         {
-                            go = Resources.Load("LockA_V") as GameObject;
+                            en = Resources.Load("LockA_V") as GameObject;
                         }
                         else
                         {
-                            go = Resources.Load("LockA_H") as GameObject;
+                            en = Resources.Load("LockA_H") as GameObject;
                         }
                         break;
                     case 'a': //Key a
-                        go = Resources.Load("KeyA") as GameObject;
+                        go = Resources.Load("Floor") as GameObject;
+                        en = Resources.Load("KeyA") as GameObject;
                         break;
                     case 'B': //Lock B
-                        go = Resources.Load("LockB") as GameObject;
+                        go = Resources.Load("Floor") as GameObject;
+                        en = Resources.Load("LockB") as GameObject;
                         break;
                     case 'b': //Key b
-                        go = Resources.Load("KeyB") as GameObject;
+                        go = Resources.Load("Floor") as GameObject;
+                        en = Resources.Load("KeyB") as GameObject;
                         break;
 
                 }
 
-                if (go == null)
-                {
-                    //throw new UnityException("Assets Please!");
-                }
-                else
+                if (go != null)
                 {
                     GameObject gogo = Instantiate(go);
 
