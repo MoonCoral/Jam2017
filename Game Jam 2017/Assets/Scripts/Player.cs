@@ -18,8 +18,6 @@ public class Player : Singleton<Player>, IPlayer, IMovable {
 	public void moveLeft () { movementModule.move (Vector2.left ); }
 	public void moveRight() { movementModule.move (Vector2.right); }
 
-	}
-
 	public void shootUp    () { shoot (Vector2.up   ); }
 	public void shootDown  () { shoot (Vector2.down ); }
 	public void shootLeft  () { shoot (Vector2.left ); }
