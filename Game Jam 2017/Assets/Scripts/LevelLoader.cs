@@ -13,9 +13,9 @@ public class LevelLoader : MonoBehaviour
     {
         string[] map = level.text.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
-        for (int x = 0; x < Width; x++)
+        for (int y = 0; y < Height; y++)
         {
-            for (int y = 0; y < Height; y++)
+            for (int x = 0; x < Width; x++)
             {
                 GameObject go = null;
                 GameObject en = null;
@@ -31,7 +31,7 @@ public class LevelLoader : MonoBehaviour
                         }
                         else
                         {
-                            t = map[x][y-1] == '#';
+                            t = map[y - 1][x] == '#';
                         }
 
                         if (y == Height-1)
@@ -40,7 +40,7 @@ public class LevelLoader : MonoBehaviour
                         }
                         else
                         {
-                            b = map[x][y+1] == '#';
+                            b = map[y + 1][x] == '#';
                         }
 
                         if (x == 0)
@@ -49,7 +49,7 @@ public class LevelLoader : MonoBehaviour
                         }
                         else
                         {
-                           l = map[x-1][y] == '#';
+                           l = map[y][x-1] == '#';
                         }
 
                         if (x == Width - 1)
@@ -58,12 +58,16 @@ public class LevelLoader : MonoBehaviour
                         }
                         else
                         {
-                            r = map[x+1][y] == '#';
+                            r = map[y][x+1] == '#';
                         }
 
                         if (t && b && l && r)
                         {
                             go = Resources.Load("Wall_Full") as GameObject;
+                        }
+                        if (!t && !b && !l && !r)
+                        {
+                            go = Resources.Load("Wall_Pillar") as GameObject;
                         }
                         else
                         {
