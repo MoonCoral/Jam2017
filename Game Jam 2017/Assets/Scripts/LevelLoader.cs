@@ -159,24 +159,13 @@ public class LevelLoader : MonoBehaviour
                 {
                     GameObject engo = Instantiate(en);
 
-                    engo.transform.parent = transform;
+					if (map [y] [x] == 'P')
+						engo.transform.parent = FindObjectOfType<GameController> ().transform;
+					else
+                    	engo.transform.parent = transform;
                     engo.transform.position = new Vector3(x, -y);
                 }
-
-                
             }
         }
-
-    }
-
-
-    // Secondary Fuse
-    void Start () {
-    
-    }
-    
-    // Update is called once per frame
-    void Update () {
-    
     }
 }
