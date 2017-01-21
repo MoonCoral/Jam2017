@@ -4,6 +4,7 @@ using Interfaces;
 using Modules;
 
 public class Player : Singleton<Player>, IPlayer, IMovable {
+	public GameObject keyUI;
 	private MovementModule movementModule; 
 
 	public MovementModule MovementModule { get { return movementModule; } }
@@ -31,5 +32,14 @@ public class Player : Singleton<Player>, IPlayer, IMovable {
 
 	}
 
-		
+	void OnTriggerEnter2D(Collider2D other) {
+		if (other.tag == "Wall") {
+			movementModule.StopAllCoroutines ();
+			movementModule.StartSmoothMove(transform.position, movementModule.startingPosition, 0.20f);
+		}
+		else if (other.tag == "Key") {
+			keyUI.SetActive (true);
+			Destroy(other.gameObject);
+		}
+	}
 }
