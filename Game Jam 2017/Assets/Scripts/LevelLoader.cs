@@ -1,32 +1,65 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Linq.Expressions;
-using System.Threading;
+﻿using System;
+using UnityEngine;
 
 public class LevelLoader : MonoBehaviour
 {
     public int Height = 42;
     public int Width = 35;
 
+    public TextAsset level;
 
     // Primary Fuse
     void Awake()
     {
-        TextAsset level = Resources.Load("Level") as TextAsset;
-
-        GameObject go;
+        string[] map = level.text.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
         for (int x = 0; x < Width; x++)
         {
             for (int y = 0; y < Height; y++)
             {
-                switch (level.bytes[x + y * Width + y])
+                GameObject go = null;
+                GameObject en = null;
+
+                switch (map[y][x])
                 {
-                    case 0x23: //# Wall
-                        bool t = (level.bytes[x + (y - 1)*Width + (y - 1)] == 0x23);
-                        bool b = (level.bytes[x + (y + 1) * Width + (y + 1)] == 0x23);
-                        bool l = (level.bytes[x - 1 + y * Width + y] == 0x23);
-                        bool r = (level.bytes[x + 1 + y * Width + y] == 0x23);
+                    case '#': //Wall
+                        bool t, b, l, r;
+
+                        if (y == 0)
+                        {
+                            t = false;
+                        }
+                        else
+                        {
+                            t = map[x][y-1] == '#';
+                        }
+
+                        if (y == Height-1)
+                        {
+                            b = false;
+                        }
+                        else
+                        {
+                            b = map[x][y+1] == '#';
+                        }
+
+                        if (x == 0)
+                        {
+                            l = false;
+                        }
+                        else
+                        {
+                           l = map[x-1][y] == '#';
+                        }
+
+                        if (x == Width - 1)
+                        {
+                            r = false;
+                        }
+                        else
+                        {
+                            r = map[x+1][y] == '#';
+                        }
 
                         if (t && b && l && r)
                         {
@@ -53,28 +86,11 @@ public class LevelLoader : MonoBehaviour
                             }
                             go = Resources.Load(id) as GameObject;
                         }
-                        go.transform.parent = transform;
-                        go.transform.localPosition.Set(x, y, 0);
                         break;
-                    case 0x2A: //* Border
-                        go = Resources.Load("Wall_Full") as GameObject;
-                        if (go == null)
-                        {
-                            throw new UnityException("Assets Please!");
-                        }
-                        go.transform.parent = transform;
-                        go.transform.localPosition.Set(x, y, 0);
-                        break;
-                    case 0x2E: //. Floor
+                    case '.': //Floor
                         go = Resources.Load("Floor") as GameObject;
-                        if (go == null)
-                        {
-                            throw new UnityException("Assets Please!");
-                        }
-                        go.transform.parent = transform;
-                        go.transform.localPosition.Set(x, y, 0);
                         break;
-                    case 0x44: //D Door
+                    case 'D': //Door
                         if (level.bytes[x + (y - 1)*Width + (y - 1)] == 0x23)
                         {
                             go = Resources.Load("Door_V") as GameObject;
@@ -83,55 +99,19 @@ public class LevelLoader : MonoBehaviour
                         {
                             go = Resources.Load("Door_H") as GameObject;
                         }
-                        if (go == null)
-                        {
-                            throw new UnityException("Assets Please!");
-                        }
-                        go.transform.parent = transform;
-                        go.transform.localPosition.Set(x, y, 0);
                         break;
-                    case 0x50: //P Player
+                    case 'P': //Player
                         go = Resources.Load("Floor") as GameObject;
-                        if (go == null)
-                        {
-                            throw new UnityException("Assets Please!");
-                        }
-                        go.transform.parent = transform;
-                        go.transform.localPosition.Set(x, y, 0);
-                        go = Resources.Load("Player") as GameObject;
-                        if (go == null)
-                        {
-                            throw new UnityException("Assets Please!");
-                        }
-                        go.transform.parent = transform;
-                        go.transform.localPosition.Set(x, y, 0);
+                        en = Resources.Load("Player") as GameObject;
                         break;
-                    case 0x46: //F Finish
+                    case 'F': //Finish
                         go = Resources.Load("Finish") as GameObject;
-                        if (go == null)
-                        {
-                            throw new UnityException("Assets Please!");
-                        }
-                        go.transform.parent = transform;
-                        go.transform.localPosition.Set(x, y, 0);
                         break;
-                    case 0x45: //E Enemy
+                    case 'E': //Enemy
                         go = Resources.Load("Floor") as GameObject;
-                        if (go == null)
-                        {
-                            throw new UnityException("Assets Please!");
-                        }
-                        go.transform.parent = transform;
-                        go.transform.localPosition.Set(x, y, 0);
-                        go = Resources.Load("Enemy") as GameObject;
-                        if (go == null)
-                        {
-                            throw new UnityException("Assets Please!");
-                        }
-                        go.transform.parent = transform;
-                        go.transform.localPosition.Set(x, y, 0);
+                        en = Resources.Load("Enemy") as GameObject;
                         break;
-                    case 0x41: //A Lock A
+                    case 'A': //Lock A
                         if (level.bytes[x + (y - 1) * Width + (y - 1)] == 0x23)
                         {
                             go = Resources.Load("LockA_V") as GameObject;
@@ -140,42 +120,40 @@ public class LevelLoader : MonoBehaviour
                         {
                             go = Resources.Load("LockA_H") as GameObject;
                         }
-                        if (go == null)
-                        {
-                            throw new UnityException("Assets Please!");
-                        }
-                        go.transform.parent = transform;
-                        go.transform.localPosition.Set(x, y, 0);
                         break;
-                    case 0x61: //a Key a
+                    case 'a': //Key a
                         go = Resources.Load("KeyA") as GameObject;
-                        if (go == null)
-                        {
-                            throw new UnityException("Assets Please!");
-                        }
-                        go.transform.parent = transform;
-                        go.transform.localPosition.Set(x, y, 0);
                         break;
-                    case 0x42: //B Lock B
+                    case 'B': //Lock B
                         go = Resources.Load("LockB") as GameObject;
-                        if (go == null)
-                        {
-                            throw new UnityException("Assets Please!");
-                        }
-                        go.transform.parent = transform;
-                        go.transform.localPosition.Set(x, y, 0);
                         break;
-                    case 0x62: //b Key b
+                    case 'b': //Key b
                         go = Resources.Load("KeyB") as GameObject;
-                        if (go == null)
-                        {
-                            throw new UnityException("Assets Please!");
-                        }
-                        go.transform.parent = transform;
-                        go.transform.localPosition.Set(x, y, 0);
                         break;
 
                 }
+
+                if (go == null)
+                {
+                    //throw new UnityException("Assets Please!");
+                }
+                else
+                {
+                    GameObject gogo = Instantiate(go);
+
+                    gogo.transform.parent = transform;
+                    gogo.transform.position = new Vector3(x, -y);
+                }
+
+                if (en != null)
+                {
+                    GameObject engo = Instantiate(en);
+
+                    engo.transform.parent = transform;
+                    engo.transform.position = new Vector3(x, -y);
+                }
+
+                
             }
         }
 
