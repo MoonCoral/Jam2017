@@ -9,7 +9,6 @@ public class BarScript : MonoBehaviour {
 	public bool isScaling = false;
 
 	void Start () {
-		int currentValue = 0;
 	}
 
 	void Update() {

@@ -22,6 +22,7 @@ GameObject:
   - 212: {fileID: 212000011515360216}
   - 114: {fileID: 114000010649580894}
   - 114: {fileID: 114000010895934108}
+  - 50: {fileID: 50000012510694932}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -95,6 +96,23 @@ Camera:
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
   m_StereoMirrorMode: 0
+--- !u!50 &50000012510694932
+Rigidbody2D:
+  serializedVersion: 2
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011048573718}
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!81 &81000011176500744
 AudioListener:
   m_ObjectHideFlags: 1

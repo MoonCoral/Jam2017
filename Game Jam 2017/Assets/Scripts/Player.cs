@@ -25,7 +25,6 @@ public class Player : Singleton<Player>, IPlayer {
 			currentTime += Time.deltaTime / time;
 
 			transform.position = Vector2.Lerp (startPos, targetPos, Mathf.SmoothStep(0.0f, 1.0f, currentTime));
-			Debug.Log (Mathf.SmoothStep(0f, 1f, time));
 			yield return new WaitForEndOfFrame();
 		}
 	}
