@@ -41,4 +41,5 @@ public class Player : Singleton<Player>, IPlayer {
 	public void echo () {
 		
 	}
+		
 }
