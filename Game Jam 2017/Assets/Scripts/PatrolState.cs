@@ -27,26 +27,44 @@ public class PatrolState : State
         }
         */
     }
-
-    //44 by 35
+    
     public override void Do(GameObject player, GameObject thisEnemy)
     {
-        Debug.Log(target + " " + thisEnemy.transform.position);
-        
         if (target == new Vector3(0, 0, 0))
         {
-            //target = new Vector3(Random.Range(-22, 22), Random.Range(-17, 17), 0);
-            target = new Vector3(0, 1, 0);
+            target = new Vector3(Random.Range(0, 35), Random.Range(0, -42), 0);
         }
-        else if (Mathf.Abs(target.x - thisEnemy.transform.position.x) > Mathf.Abs(target.y - thisEnemy.transform.position.y))
+        Debug.Log(target + " " + thisEnemy.transform.position);
+        if (((Mathf.Abs(target.x - thisEnemy.transform.position.x) < Mathf.Abs(target.y - thisEnemy.transform.position.y)) &&
+            !Mathf.Abs(target.x - thisEnemy.transform.position.x).Equals(0)) || 
+            Mathf.Abs(target.y - thisEnemy.transform.position.y).Equals(0))
         {
-            thisEnemy.transform.position = new Vector3(thisEnemy.transform.position.x,
-                thisEnemy.transform.position.y + 1, 0);
-        }
-        else if (Mathf.Abs(target.x - thisEnemy.transform.position.x) < Mathf.Abs(target.y - thisEnemy.transform.position.y))
-        {
+            if (target.x < thisEnemy.transform.position.x)
+            {
+            thisEnemy.transform.position = new Vector3(thisEnemy.transform.position.x - 1,
+                thisEnemy.transform.position.y, 0);
+            }
+            else if (target.x > thisEnemy.transform.position.x)
+            {
             thisEnemy.transform.position = new Vector3(thisEnemy.transform.position.x + 1,
                 thisEnemy.transform.position.y, 0);
+            }
+        }
+        else if (((Mathf.Abs(target.x - thisEnemy.transform.position.x) >
+                   Mathf.Abs(target.y - thisEnemy.transform.position.y)) &&
+                  !Mathf.Abs(target.y - thisEnemy.transform.position.y).Equals(0)) ||
+                 Mathf.Abs(target.x - thisEnemy.transform.position.x).Equals(0))
+        {
+            if (target.y < thisEnemy.transform.position.y)
+            {
+                thisEnemy.transform.position = new Vector3(thisEnemy.transform.position.x,
+                    thisEnemy.transform.position.y - 1, 0);
+            }
+            else if (target.y > thisEnemy.transform.position.y)
+            {
+                thisEnemy.transform.position = new Vector3(thisEnemy.transform.position.x,
+                    thisEnemy.transform.position.y + 1, 0);
+            }
         }
     }
 }
