@@ -26,8 +26,8 @@ public class BarScript : Singleton<BarScript> {
 	}
 	public void StartScaling() {
 		StartCoroutine (CarlUpdate ());
-		if(currentCharges<charges)
-			currentCharges += 1;
+		//if(currentCharges<charges)
+		//	currentCharges += 1;
 	}
 	private IEnumerator CarlUpdate() {
 		isScaling = true;
@@ -46,12 +46,12 @@ public class BarScript : Singleton<BarScript> {
 	}
 
 	public bool useEnergy (){
-		if (currentCharges == 5) {
+		//if (currentCharges == 5) {
 			image.fillAmount = 0;
 			currentCharges = 0;
 			return true;
-		}
-		return false;
+		//}
+		//return false;
 	}
 
 	public void changeTurn(){
