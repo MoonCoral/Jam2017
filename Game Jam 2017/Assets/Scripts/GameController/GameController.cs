@@ -7,6 +7,7 @@ public class GameController : Singleton<GameController> {
 	public float playerIntermissionDuration = 0.5f;
 	public float enemyIntermissionDuration  = 0.5f;
 
+
 	private List<IEnemy> enemyList;
 
 	void Awake() {
@@ -16,7 +17,9 @@ public class GameController : Singleton<GameController> {
 	void Start() {
 		// Set up level
 		// Initiate Enemy List
+		BarScript.Instance.changeTurn ();
 		enemyList = new List<IEnemy>();
+
 	}
 
 	public void StartPlayersTurn() {
@@ -25,14 +28,17 @@ public class GameController : Singleton<GameController> {
 	private IEnumerator playersTurn() {
 		InputManager.Instance.isInteractable = false;
 		yield return new WaitForSeconds (playerIntermissionDuration);
-		//StartCoroutine (enemiesTurn ());
-		InputManager.Instance.isInteractable = true;
+		BarScript.Instance.changeTurn ();
+		StartCoroutine (enemiesTurn ());
+
 	}
+
 	private IEnumerator enemiesTurn() {
 		yield return new WaitForSeconds (enemyIntermissionDuration );
 		foreach (IEnemy enemy in enemyList) {
 			enemy.action ();
-		}
+		}	
 		InputManager.Instance.isInteractable = true;
+		BarScript.Instance.changeTurn ();
 	}
 }

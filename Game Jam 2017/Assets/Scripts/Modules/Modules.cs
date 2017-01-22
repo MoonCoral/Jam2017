@@ -27,4 +27,14 @@ namespace Modules
 			startingPosition = targetPos;
 		}
 	}
+
+	[System.Serializable]
+	public class ShootingModule : MonoBehaviour {
+		public GameObject projectile;
+
+		public void shoot(float angle) {
+			Quaternion rot = Quaternion.Euler (0, 0, angle);
+			GameObject projObj = Instantiate (projectile, transform.position, rot) as GameObject;
+		}
+	}
 }

@@ -3,15 +3,20 @@ using System.Collections;
 using Interfaces;
 using Modules;
 
-public class Player : Singleton<Player>, IPlayer, IMovable {
+
+public class Player : Singleton<Player>, IPlayer, IMovable{
 	public GameObject keyUI;
+
 	private MovementModule movementModule; 
+	private ShootingModule shootingModule;
 
 	public MovementModule MovementModule { get { return movementModule; } }
+	public ShootingModule ShootingModule { get { return shootingModule; } }
 
 	void Awake() { 
 		InitiateSingleton ();
 		movementModule = gameObject.AddComponent<MovementModule> ();
+		shootingModule = gameObject.AddComponent<ShootingModule> ();
 	}
 
 	public void moveUp   () { movementModule.move (Vector2.up   ); }
@@ -25,11 +30,21 @@ public class Player : Singleton<Player>, IPlayer, IMovable {
 	public void shootRight () { shoot (Vector2.right); }
 
 	public void shoot(Vector2 movementDirection) {
-		
+
+		if (BarScript.Instance.useEnergy ())
+			Debug.Log ("you done a shoot");
+		else
+			Debug.Log("you didnt done a shoot");
+
 	}
 
 	public void echo () {
 
+
+		if (BarScript.Instance.useEnergy ())
+			Debug.Log ("you done a echo");
+		else
+			Debug.Log("you didnt done a echo");
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
