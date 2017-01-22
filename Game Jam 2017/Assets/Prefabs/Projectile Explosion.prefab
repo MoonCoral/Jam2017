@@ -39,7 +39,6 @@ GameObject:
   - component: {fileID: 198000013679818516}
   - component: {fileID: 199000012152342398}
   - component: {fileID: 114000011971264044}
-  - component: {fileID: 114000012503786822}
   - component: {fileID: 114000011822581236}
   m_Layer: 5
   m_Name: Projectile Explosion
@@ -149,17 +148,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   duration: 4
---- !u!114 &114000012503786822
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013477369166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bed8d0798be894845b6d46aecf6d37b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!198 &198000013679818516
 ParticleSystem:
   m_ObjectHideFlags: 1

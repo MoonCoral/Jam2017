@@ -23,8 +23,8 @@ GameObject:
   - component: {fileID: 114000012291223402}
   - component: {fileID: 58000013758645468}
   - component: {fileID: 50000011270465408}
-  m_Layer: 5
-  m_Name: Projectile - Copy
+  m_Layer: 8
+  m_Name: Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 4000011184634814}
   - component: {fileID: 96000010314702918}
   - component: {fileID: 114000011254731712}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143,7 +143,7 @@ TrailRenderer:
   m_Time: 0.5
   m_Parameters:
     serializedVersion: 2
-    widthMultiplier: 1
+    widthMultiplier: 0.5
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -235,7 +235,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70bbd463692d8cb4eb90aebba4a00532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fallout: {fileID: 1000013993102824, guid: 635eddb0a1eeda946a06af3513e8428b, type: 2}
   explosion: {fileID: 1000013477369166, guid: 5345cbdf85f64a443a9c3a0f1d25d316, type: 2}
   speed: 10
   timeToLive: 0.5
