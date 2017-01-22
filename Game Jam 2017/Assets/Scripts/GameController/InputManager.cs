@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using PropertyAttributes;
+using UnityEngine.SceneManagement;
 
 public class InputManager : Singleton<InputManager> {
 	[ReadOnly] public bool isInteractable = true;
@@ -12,26 +13,34 @@ public class InputManager : Singleton<InputManager> {
 			bool gotGoodInput = true;
 			if      (Input.GetKeyDown (KeyCode.W)) {
 				Player.Instance.moveUp   ();
-				BarScript.Instance.StartScaling ();
 			} 
 			else if (Input.GetKeyDown (KeyCode.S)) {
 				Player.Instance.moveDown ();
-				BarScript.Instance.StartScaling ();
 			} 
 			else if (Input.GetKeyDown (KeyCode.A)) {
 				Player.Instance.moveLeft ();
-				BarScript.Instance.StartScaling ();
 			} 
 			else if (Input.GetKeyDown (KeyCode.D)) {
 				Player.Instance.moveRight();
-				BarScript.Instance.StartScaling ();
 			}
-			else if (Input.GetAxis ("Shoot") == 1) {
-				Player.Instance.shoot (Vector2.up);
+			else if (Input.GetKeyDown (KeyCode.UpArrow   )) {
+				Player.Instance.shootUp    ();
+			}
+			else if (Input.GetKeyDown (KeyCode.DownArrow )) {
+				Player.Instance.shootDown  ();
+			}
+			else if (Input.GetKeyDown (KeyCode.LeftArrow )) {
+				Player.Instance.shootLeft  ();
+			}
+			else if (Input.GetKeyDown (KeyCode.RightArrow)) {
+				Player.Instance.shootRight ();
 			}
 			else if (Input.GetAxis ("Echo" ) == 1) {
 				Player.Instance.echo  ();
 			}
+			else if (Input.GetKeyDown(KeyCode.R) && GameObject.Find("Win/Lose").GetComponent<WinLoseControl>().GetOver) {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
 			else
 				gotGoodInput = false;
 

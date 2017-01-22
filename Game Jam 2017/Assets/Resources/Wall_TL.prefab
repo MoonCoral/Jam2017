@@ -21,6 +21,7 @@ GameObject:
   - 4: {fileID: 4000011865248464}
   - 212: {fileID: 212000011732061472}
   - 61: {fileID: 61000013866489760}
+  - 61: {fileID: 61000011651084402}
   m_Layer: 0
   m_Name: Wall_TL
   m_TagString: Wall
@@ -41,6 +42,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!61 &61000011651084402
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011295984964}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0.125}
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 0.76}
 --- !u!61 &61000013866489760
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -52,9 +67,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: 0.06317069, y: 0.06316101}
+  m_Offset: {x: 0.125, y: 0}
   serializedVersion: 2
-  m_Size: {x: 0.89158547, y: 0.8915857}
+  m_Size: {x: 0.76, y: 0.5}
 --- !u!212 &212000011732061472
 SpriteRenderer:
   m_ObjectHideFlags: 1

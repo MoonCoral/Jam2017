@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Interfaces;
-using Modules;
 
-
-public class Player : Singleton<Player>, IPlayer, IMovable{
+[RequireComponent(typeof(MovementModule))]
+[RequireComponent(typeof(ShootingModule))]
+public class Player : Singleton<Player>, IMovable, IAttacking {
 	public GameObject keyUI;
 
 	private MovementModule movementModule; 
@@ -15,32 +15,35 @@ public class Player : Singleton<Player>, IPlayer, IMovable{
 
 	void Awake() { 
 		InitiateSingleton ();
-		movementModule = gameObject.AddComponent<MovementModule> ();
-		shootingModule = gameObject.AddComponent<ShootingModule> ();
+		movementModule = GetComponent<MovementModule> ();
+		shootingModule = GetComponent<ShootingModule> ();
 	}
 
-	public void moveUp   () { movementModule.move (Vector2.up   ); }
-	public void moveDown () { movementModule.move (Vector2.down ); }
-	public void moveLeft () { movementModule.move (Vector2.left ); }
-	public void moveRight() { movementModule.move (Vector2.right); }
+	public void moveUp   () { movementModule.move (Vector2.up   );  BarScript.Instance.StartScaling ();}
+	public void moveDown () { movementModule.move (Vector2.down );  BarScript.Instance.StartScaling ();}
+	public void moveLeft () { movementModule.move (Vector2.left );  BarScript.Instance.StartScaling ();}
+	public void moveRight() { movementModule.move (Vector2.right);  BarScript.Instance.StartScaling ();}
 
-	public void shootUp    () { shoot (Vector2.up   ); }
-	public void shootDown  () { shoot (Vector2.down ); }
-	public void shootLeft  () { shoot (Vector2.left ); }
-	public void shootRight () { shoot (Vector2.right); }
-
-	public void shoot(Vector2 movementDirection) {
-
+	public void shootUp    () {
 		if (BarScript.Instance.useEnergy ())
-			Debug.Log ("you done a shoot");
-		else
-			Debug.Log("you didnt done a shoot");
-
-	}
+			shootingModule.shoot (ShootingModule.ShootingAngles.Up   ); 
+		}
+	public void shootDown  () { 
+		if (BarScript.Instance.useEnergy ())
+			shootingModule.shoot (ShootingModule.ShootingAngles.Down ); 
+		}
+	public void shootLeft  () { 
+		if (BarScript.Instance.useEnergy ())
+			shootingModule.shoot (ShootingModule.ShootingAngles.Left ); 
+		}
+	public void shootRight () { 
+		if (BarScript.Instance.useEnergy ())
+			shootingModule.shoot (ShootingModule.ShootingAngles.Right); 
+		}
 
 	public void echo () {
 
-
+	
 		if (BarScript.Instance.useEnergy ())
 			Debug.Log ("you done a echo");
 		else
@@ -48,11 +51,11 @@ public class Player : Singleton<Player>, IPlayer, IMovable{
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
-		if (other.tag == "Wall") {
+		if      (other.tag == "Wall") {
 			movementModule.StopAllCoroutines ();
 			movementModule.StartSmoothMove(transform.position, movementModule.startingPosition, 0.20f);
 		}
-		else if (other.tag == "Key") {
+		else if (other.tag == "Key" ) {
 			keyUI.SetActive (true);
 			Destroy(other.gameObject);
 		}
