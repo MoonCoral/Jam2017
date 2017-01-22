@@ -22,5 +22,6 @@ public class ShootingModule : MonoBehaviour {
 	public void shoot( ShootingAngles.ValuePair angle ) {
 		Quaternion rot = Quaternion.Euler (0, 0, angle.value);
 		GameObject projObj = Instantiate (projectile, transform.position, rot) as GameObject;
-	}
+        GetComponent<AudioSource>().Play();
+    }
 }

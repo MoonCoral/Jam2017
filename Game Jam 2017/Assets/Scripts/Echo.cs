@@ -19,9 +19,11 @@ public class Echo : MonoBehaviour
     
     // Update is called once per frame
     void Update () {
-
+        if (GetComponent<ParticleSystem>().particleCount < Emission/2)
+        {
+            GetComponentInParent<AudioSource>().Play();
             GetComponent<ParticleSystem>().Emit(Emission);
-        
+        }
     }
 
     void OnParticleCollision(GameObject other)

@@ -43,11 +43,11 @@ public class Player : Singleton<Player>, IMovable, IAttacking {
 
 	public void echo () {
 
-	
-		if (BarScript.Instance.useEnergy ())
-			Debug.Log ("you done a echo");
-		else
-			Debug.Log("you didnt done a echo");
+
+	    if (BarScript.Instance.useEnergy())
+	    {
+	        GetComponent<AudioSource>().Play();
+	    }
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
@@ -58,6 +58,7 @@ public class Player : Singleton<Player>, IMovable, IAttacking {
 		else if (other.tag == "Key" ) {
 			keyUI.SetActive (true);
 			Destroy(other.gameObject);
+            GetComponent<AudioSource>().Play();
 		}
 	}
 }
