@@ -29,7 +29,8 @@ public class GameController : Singleton<GameController> {
 		InputManager.Instance.isInteractable = false;
 		yield return new WaitForSeconds (playerIntermissionDuration);
 		BarScript.Instance.changeTurn ();
-		StartCoroutine (enemiesTurn ());
+		InputManager.Instance.isInteractable = true;
+		//StartCoroutine (enemiesTurn ());
 
 	}
 
