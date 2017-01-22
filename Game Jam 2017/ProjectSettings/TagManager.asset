@@ -17,7 +17,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Bullet
   - 
   - 
   - 
@@ -46,5 +46,8 @@ TagManager:
     uniqueID: 0
     locked: 0
   - name: Foreground
-    uniqueID: 1066940687
+    uniqueID: 896882211
+    locked: 0
+  - name: UI
+    uniqueID: 4124250507
     locked: 0

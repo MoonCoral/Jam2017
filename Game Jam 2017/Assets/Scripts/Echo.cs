@@ -19,8 +19,9 @@ public class Echo : MonoBehaviour
     
     // Update is called once per frame
     void Update () {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (GetComponent<ParticleSystem>().particleCount < Emission/2)
         {
+            GetComponentInParent<AudioSource>().Play();
             GetComponent<ParticleSystem>().Emit(Emission);
         }
     }
@@ -31,48 +32,27 @@ public class Echo : MonoBehaviour
 
         if (other.tag == "Enemy")
         {
-            //Debug.Log("Enemy");
-
             int numCollisionEvents = system.GetCollisionEvents(other, collisionEvents);
             int particleCount = system.GetParticles(particles);
 
-            float x = 0;
-            float y = 0;
+            Vector3 enemy = other.transform.position;
+            enemy = system.transform.InverseTransformPoint(enemy);
 
-            for (int c = 0; c < numCollisionEvents; c++)
-            {
-                x += collisionEvents[c].intersection.x;
-                y += collisionEvents[c].intersection.y;
-            }
+            //Debug.Log("Enemy");
+            //Debug.Log(enemy);
 
-            x /= numCollisionEvents;
-            y /= numCollisionEvents;
+            float xMin = enemy.x - Radius;
+            float xMax = enemy.x + Radius;
 
-            x = Mathf.Round(x);
-            y = Mathf.Round(y);
-
-            //Vector3 w =  transform.TransformPoint(new Vector3(x, y));
-            //x = w.x;
-            //y = w.y;
-
-            float xMin = x - Radius;
-            float xMax = x + Radius;
-
-            float yMin = y - Radius;
-            float yMax = y + Radius;
-
-            //Debug.Log("X>>>");
-            //Debug.Log(xMax);
-            //Debug.Log(xMin);
-            //Debug.Log("<<<X");
-            //Debug.Log("Y>>>");
-            //Debug.Log(yMax);
-            //Debug.Log(yMin);
-            //Debug.Log("<<<y");
+            float yMin = enemy.y - Radius;
+            float yMax = enemy.y + Radius;
 
             for (int p = 0; p < particleCount; p++)
             {
-                //Debug.Log(particles[p].position);
+                if (particles[p].velocity.magnitude > 0.1)
+                {
+                    continue;
+                }
 
                 if (particles[p].position.x < xMin)
                 {
@@ -93,18 +73,20 @@ public class Echo : MonoBehaviour
 
                 particles[p].startColor = new Color32(0xFF, 0, 0, 0xFF);
 
-                foreach (var collision in collisionEvents)
-                {
-                    if (collision.intersection == particles[p].position)
-                    {
-                        float velfix = 2.5f / collision.velocity.magnitude;
-                        particles[p].velocity = collision.velocity;
-                        particles[p].velocity.Normalize();
-                        particles[p].velocity.Scale(new Vector3(velfix, velfix));
-                        Vector3 fixer = new Vector3(particles[p].velocity.x * Time.deltaTime, particles[p].velocity.y * Time.deltaTime);
-                        particles[p].position += fixer;
-                    }
-                }
+                Vector3 vel = particles[p].position;
+                vel.Normalize();
+                //Debug.Log(vel.magnitude);
+                //vel.Scale(new Vector3(2.5f, 2.5f));
+
+                //Debug.Log(vel.magnitude);
+
+                particles[p].velocity = vel;
+                //Debug.Log(particles[p].velocity.magnitude);
+
+                Vector3 fixer = new Vector3(vel.x * Time.deltaTime,vel.y * Time.deltaTime);
+                fixer += particles[p].position;
+
+                particles[p].position = fixer;
             }
 
         system.SetParticles(particles, particleCount);

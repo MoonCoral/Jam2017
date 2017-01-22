@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using PropertyAttributes;
+using UnityEngine.SceneManagement;
 
 public class InputManager : Singleton<InputManager> {
 	[ReadOnly] public bool isInteractable = true;
@@ -10,24 +11,36 @@ public class InputManager : Singleton<InputManager> {
 	void Update() {
 		if (isInteractable) {
 			bool gotGoodInput = true;
-			if      (Input.GetKeyDown (KeyCode.W)) {
+			if      (Input.GetKey (KeyCode.W)) {
 				Player.Instance.moveUp   ();
 			} 
-			else if (Input.GetKeyDown (KeyCode.S)) {
+			else if (Input.GetKey (KeyCode.S)) {
 				Player.Instance.moveDown ();
 			} 
-			else if (Input.GetKeyDown (KeyCode.A)) {
+			else if (Input.GetKey (KeyCode.A)) {
 				Player.Instance.moveLeft ();
 			} 
-			else if (Input.GetKeyDown (KeyCode.D)) {
+			else if (Input.GetKey (KeyCode.D)) {
 				Player.Instance.moveRight();
 			}
-			else if (Input.GetAxis ("Shoot") == 1) {
-				Player.Instance.shoot (Vector2.up);
+			else if (Input.GetKeyDown (KeyCode.UpArrow   )) {
+				Player.Instance.shootUp    ();
+			}
+			else if (Input.GetKeyDown (KeyCode.DownArrow )) {
+				Player.Instance.shootDown  ();
+			}
+			else if (Input.GetKeyDown (KeyCode.LeftArrow )) {
+				Player.Instance.shootLeft  ();
+			}
+			else if (Input.GetKeyDown (KeyCode.RightArrow)) {
+				Player.Instance.shootRight ();
 			}
 			else if (Input.GetAxis ("Echo" ) == 1) {
 				Player.Instance.echo  ();
 			}
+			else if (Input.GetKeyDown(KeyCode.R) && GameObject.Find("Win/Lose").GetComponent<WinLoseControl>().GetOver) {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
 			else
 				gotGoodInput = false;
 
