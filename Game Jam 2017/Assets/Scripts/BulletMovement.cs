@@ -2,7 +2,6 @@
 using System.Collections;
 
 public class BulletMovement : MonoBehaviour {
-	public GameObject fallout  ;
 	public GameObject explosion;
 
 	public float speed = 1f;
@@ -13,7 +12,6 @@ public class BulletMovement : MonoBehaviour {
 	IEnumerator bulletMovement() {
 		float elapsedTime = 0.0f;
 		while (elapsedTime < timeToLive) {
-			Instantiate (fallout, transform.position, transform.rotation);
 			elapsedTime += Time.deltaTime;
 
 			Vector3 pos = transform.position;

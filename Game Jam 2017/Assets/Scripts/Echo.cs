@@ -19,10 +19,9 @@ public class Echo : MonoBehaviour
     
     // Update is called once per frame
     void Update () {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
+
             GetComponent<ParticleSystem>().Emit(Emission);
-        }
+        
     }
 
     void OnParticleCollision(GameObject other)
@@ -75,7 +74,7 @@ public class Echo : MonoBehaviour
                 Vector3 vel = particles[p].position;
                 vel.Normalize();
                 //Debug.Log(vel.magnitude);
-                vel.Scale(new Vector3(2.5f, 2.5f));
+                //vel.Scale(new Vector3(2.5f, 2.5f));
 
                 //Debug.Log(vel.magnitude);
 
