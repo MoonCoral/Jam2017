@@ -159,10 +159,14 @@ public class LevelLoader : MonoBehaviour
                 {
                     GameObject engo = Instantiate(en);
 
-					if (map [y] [x] == 'P')
-						engo.transform.parent = FindObjectOfType<GameController> ().transform;
-					else
-                    	engo.transform.parent = transform;
+                    if (map[y][x] == 'P')
+                    {
+                        engo.transform.parent = FindObjectOfType<GameController>().transform;
+                    }
+                    else
+                    {
+                        engo.transform.parent = transform;
+                    }
                     engo.transform.position = new Vector3(x, -y);
                 }
             }

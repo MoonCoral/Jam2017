@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 public class Echo : MonoBehaviour
 {
+    public int Emission = 1000;
+    public float Radius = 0.40f;
 
     private ParticleSystem system;
     public List<ParticleCollisionEvent> collisionEvents;
@@ -13,13 +14,14 @@ public class Echo : MonoBehaviour
         system = GetComponent<ParticleSystem>();
         system.GetComponent<Renderer>().sortingLayerName = "Foreground";
         collisionEvents = new List<ParticleCollisionEvent>();
+        system.maxParticles = Emission;
     }
     
     // Update is called once per frame
     void Update () {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            GetComponent<ParticleSystem>().Emit(5000);
+            GetComponent<ParticleSystem>().Emit(Emission);
         }
     }
 
@@ -46,12 +48,18 @@ public class Echo : MonoBehaviour
             x /= numCollisionEvents;
             y /= numCollisionEvents;
 
-            float xMin = x - 0.40f;
-            float xMax = x + 0.40f;
+            x = Mathf.Round(x);
+            y = Mathf.Round(y);
 
-            float yMin = y - 0.40f;
-            float yMax = y + 0.40f;
+            //Vector3 w =  transform.TransformPoint(new Vector3(x, y));
+            //x = w.x;
+            //y = w.y;
 
+            float xMin = x - Radius;
+            float xMax = x + Radius;
+
+            float yMin = y - Radius;
+            float yMax = y + Radius;
 
             //Debug.Log("X>>>");
             //Debug.Log(xMax);
@@ -89,10 +97,11 @@ public class Echo : MonoBehaviour
                 {
                     if (collision.intersection == particles[p].position)
                     {
-                        float velfix = 5.0f / collision.velocity.magnitude;
+                        float velfix = 2.5f / collision.velocity.magnitude;
                         particles[p].velocity = collision.velocity;
+                        particles[p].velocity.Normalize();
                         particles[p].velocity.Scale(new Vector3(velfix, velfix));
-                        Vector3 fixer = new Vector3(particles[p].velocity.x * 0.075f, particles[p].velocity.y * 0.075f);
+                        Vector3 fixer = new Vector3(particles[p].velocity.x * Time.deltaTime, particles[p].velocity.y * Time.deltaTime);
                         particles[p].position += fixer;
                     }
                 }
